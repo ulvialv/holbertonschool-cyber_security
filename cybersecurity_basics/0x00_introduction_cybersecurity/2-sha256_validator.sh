@@ -1,2 +1,3 @@
 #!/bin/bash
-[ "$(sha256sum "$1" | cut -d' ' -f1)" = "$2" ] && echo "$1: OK" || echo "$1: FAILED"
+echo "$2  $1" | sha256sum -c - &>/dev/null && echo "$1: OK" || echo "$1: FAILED"
+
