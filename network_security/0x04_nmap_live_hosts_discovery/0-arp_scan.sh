@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo nmap -sn -PR "$SUBNET"
+sudo nmap -sn -PR "$1"
