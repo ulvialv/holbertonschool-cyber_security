@@ -1,26 +1,17 @@
-#!/bin/bash
+#!/bin/sh
+
 if [ -z "$1" ]; then
   exit 1
 fi
 
-HASH=${1#\{xor\}}
-DECODED=$(echo "$HASH" | base64 -d)
+HASH=$(echo "$1" | sed 's/^{xor}//')
+DECODED=$(echo "$HASH" | base64 -d 2>/dev/null)
 KEY=90
 
 RESULT=""
 
-for ((i=0; i<${#DECODED}; i++)); do
-  c=$(printf "%d" "'${DECODED:i:1}")
-  RESULT+=$(printf "\\$(printf '%03o' $((c ^ KEY)))")
+echo "$DECODED" | od -An -t u1 | while read -r c; do
+  RESULT=$(printf "%s%s" "$RESULT" "$(printf "\\$(printf '%03o' $((c ^ KEY)))")")
 done
 
-echo "$RESULT"
-
-RESULT=""
-
-for ((i=0; i<${#DECODED}; i++)); do
-  c=$(printf "%d" "'${DECODED:i:1}")
-  RESULT+=$(printf "\\$(printf '%03o' $((c ^ KEY)))")
-done
-
-echo "$RESULT"
+printf "%s\n" "$RESULT"
