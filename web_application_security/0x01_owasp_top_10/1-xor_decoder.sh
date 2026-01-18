@@ -15,3 +15,12 @@ for ((i=0; i<${#DECODED}; i++)); do
 done
 
 echo "$RESULT"
+
+RESULT=""
+
+for ((i=0; i<${#DECODED}; i++)); do
+  c=$(printf "%d" "'${DECODED:i:1}")
+  RESULT+=$(printf "\\$(printf '%03o' $((c ^ KEY)))")
+done
+
+echo "$RESULT"
