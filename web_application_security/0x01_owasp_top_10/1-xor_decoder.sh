@@ -1,23 +1,28 @@
 #!/bin/bash
+# WebSphere XOR Password Decoder
+# Decodes passwords in format: {xor}BASE64_ENCODED
 
-# Arg check
-if [ -z "$1" ]; then
-  exit 1
-fi
+# Get input
+INPUT="$1"
 
 # Remove {xor} prefix
-HASH="${1#\{xor\}}"
+ENCODED="${INPUT#\{xor\}}"
 
 # Base64 decode
-DECODED=$(echo "$HASH" | base64 -d 2>/dev/null)
+DECODED=$(echo "$ENCODED" | base64 -d 2>/dev/null)
 
-# XOR decode (WebSphere uses 0x5A)
+# XOR decode with key 0x5F (WebSphere default)
 RESULT=""
-
 for (( i=0; i<${#DECODED}; i++ )); do
-  char=$(printf "%d" "'${DECODED:$i:1}")
-  RESULT+=$(printf "\\$(printf '%03o' $((char ^ 0x5A)))")
+    # Get byte
+    BYTE="${DECODED:$i:1}"
+    # Get ASCII value
+    ASCII=$(printf "%d" "'$BYTE")
+    # XOR with 0x5F
+    XOR_RESULT=$((ASCII ^ 0x5F))
+    # Append character
+    RESULT+=$(printf "\\$(printf '%03o' $XOR_RESULT)")
 done
 
-# Output
-echo "$RESULT"
+# Output result
+echo -e "$RESULT"
