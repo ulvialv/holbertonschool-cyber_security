@@ -1,0 +1,10 @@
+www
+webdisk
+ftp
+admin
+dev
+test
+upload
+files
+media
+portal
