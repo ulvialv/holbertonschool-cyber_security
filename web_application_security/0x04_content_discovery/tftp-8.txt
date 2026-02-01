@@ -1,0 +1,7 @@
+8-flag.txt
+flag-8.txt
+flag8.txt
+8flag.txt
+flag.txt
+8.txt
+flag
