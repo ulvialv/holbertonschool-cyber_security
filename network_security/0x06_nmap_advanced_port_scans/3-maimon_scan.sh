@@ -1,2 +1,2 @@
 #!/bin/bash
-nmap -sM -p 21,22,23,80,443 -vv "$1"
+nmap -sM -p http,https,ftp,ssh,telnet -vv "$1"
