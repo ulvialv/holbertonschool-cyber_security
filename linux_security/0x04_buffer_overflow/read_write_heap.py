@@ -72,8 +72,7 @@ def main():
             # 3. Adım: Bulunan offset'e gidip yeni değeri yazdır
             mem.seek(heap_start + offset)
             mem.write(encoded_replace)
-            print(f"Successfully replaced '{search_string}' with '{replace_string}' in PID {pid}.")
-            
+
     except Exception as e:
         print(f"Error opening or writing to mem file: {e}")
         sys.exit(1)
