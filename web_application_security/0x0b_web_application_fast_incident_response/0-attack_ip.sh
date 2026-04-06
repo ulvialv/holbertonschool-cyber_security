@@ -1,2 +1,2 @@
 #!/bin/bash
-awk '{print $1}' logs.txt | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}'
+grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' logs.txt | awk '{print $1}' | sort | uniq -c | sort -rn | head -1 | awk '{print $2}'
