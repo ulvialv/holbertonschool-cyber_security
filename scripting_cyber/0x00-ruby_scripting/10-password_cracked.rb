@@ -5,14 +5,14 @@ if ARGV.length != 2
   exit
 end
 
-target_hash = ARGV[0].downcase
+hashed_password = ARGV[0].downcase
 dictionary_file = ARGV[1]
 
 File.foreach(dictionary_file) do |line|
   word = line.chomp
   hashed_word = Digest::SHA256.hexdigest(word)
   
-  if hashed_word == target_hash
+  if hashed_word == hashed_password
     puts "Password found: #{word}"
     exit
   end
