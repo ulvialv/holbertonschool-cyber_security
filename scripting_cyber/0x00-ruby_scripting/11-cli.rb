@@ -12,6 +12,7 @@ end
 
 def list_tasks
   if File.exist?(TASKS_FILE) && !File.zero?(TASKS_FILE)
+    puts "Tasks:"
     File.readlines(TASKS_FILE).each_with_index do |line, index|
       puts "#{index + 1}. #{line.chomp}"
     end
