@@ -1,0 +1,19 @@
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+id_rsa
+id_rsa.*
+*.credentials
+*.secret
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+*.swp
+*.swo
+*~

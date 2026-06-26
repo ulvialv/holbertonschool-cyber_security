@@ -1,10 +1,17 @@
 import hashlib
+import os
+import sys
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 
-# DİQQƏT: Bura brauzerdən götürdüyünüz TAM kukini yazmalısınız (Məs: eyJj... .Z2m... .4Xp...)
-cookie = 'eyJjYW5fYnV5IjpmYWxzZSwidXNlcl9pZCI6InRlc3R1c2VyIn0.aiQLMQ.PCgu_0j3g4wf9_QWMnipC-eL5BE'
+# Read the cookie from env var or CLI arg — never hardcode session tokens
+cookie = os.environ.get('TARGET_COOKIE') or (sys.argv[1] if len(sys.argv) > 1 else None)
+if not cookie:
+    print("Usage: TARGET_COOKIE=<cookie> python brute.py")
+    print("   or: python brute.py <cookie> [wordlist_path]")
+    sys.exit(1)
 
-wordlist_path = '/usr/share/wordlists/rockyou.txt'
+wordlist_path = (sys.argv[2] if len(sys.argv) > 2 else
+                 os.environ.get('WORDLIST_PATH', '/usr/share/wordlists/rockyou.txt'))
 
 print("[*] Brute-force başladılır...")
 
