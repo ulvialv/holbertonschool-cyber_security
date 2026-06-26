@@ -42,10 +42,20 @@ def main():
                     heap_start = int(addrs[0], 16)
                     heap_end = int(addrs[1], 16)
                     break
-    except Exception:
+    except FileNotFoundError:
+        print("Error: process {} not found".format(pid), file=sys.stderr)
+        sys.exit(1)
+    except PermissionError:
+        print("Error: permission denied for process {}".format(pid),
+              file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print("Error reading maps file: {}".format(e), file=sys.stderr)
         sys.exit(1)
 
     if heap_start is None or heap_end is None:
+        print("Error: no heap found for process {}".format(pid),
+              file=sys.stderr)
         sys.exit(1)
 
     try:
@@ -62,7 +72,16 @@ def main():
 
             mem.seek(heap_start + offset)
             mem.write(r_bytes)
-    except Exception:
+    except FileNotFoundError:
+        print("Error: process {} not found".format(pid), file=sys.stderr)
+        sys.exit(1)
+    except PermissionError:
+        print("Error: permission denied for process {}".format(pid),
+              file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print("Error accessing process memory: {}".format(e),
+              file=sys.stderr)
         sys.exit(1)
 
 
