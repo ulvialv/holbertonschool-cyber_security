@@ -1,2 +1,3 @@
 #!/bin/bash
-sudo nmap -sn -PS22,80,443 $1
+. "$(dirname "$0")/../shared/nmap_wrapper.sh"
+nmap_host_discovery "-PS22,80,443" "$1"

@@ -1,2 +1,3 @@
 #!/bin/bash
-john --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-SHA256 "$1" && john --show --format=Raw-SHA256 "$1" | head -n -2 | cut -d: -f2 > 6-password.txt
+. "$(dirname "$0")/../shared/hash_utils.sh"
+crack_with_john "$1" "Raw-SHA256" "6-password.txt"

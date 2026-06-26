@@ -1,2 +1,3 @@
 #!/bin/bash
-hashcat -m 0 "$1" /usr/share/wordlists/rockyou.txt --force && hashcat -m 0 "$1" --show | cut -d: -f2 > 7-password.txt
+. "$(dirname "$0")/../shared/hash_utils.sh"
+crack_with_hashcat "0" "$1" "7-password.txt"
