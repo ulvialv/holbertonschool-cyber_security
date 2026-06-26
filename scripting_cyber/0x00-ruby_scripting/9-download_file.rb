@@ -23,6 +23,16 @@ begin
   end
 
   puts "File downloaded and saved to #{local_path}."
-rescue => e
-  puts "An error occurred: #{e.message}"
+rescue OpenURI::HTTPError => e
+  $stderr.puts "HTTP error: #{e.message}"
+  exit 1
+rescue SocketError => e
+  $stderr.puts "Connection error: #{e.message}"
+  exit 1
+rescue Errno::EACCES => e
+  $stderr.puts "Permission denied: #{e.message}"
+  exit 1
+rescue StandardError => e
+  $stderr.puts "Error: #{e.message}"
+  exit 1
 end
