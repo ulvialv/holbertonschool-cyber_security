@@ -1,2 +1,3 @@
 #!/bin/bash
-sudo nmap -sF -p 80-85 -f -T2 "$1"
+. "$(dirname "$0")/../shared/nmap_wrapper.sh"
+nmap_scan "-sF -p 80-85 -f -T2" "$1"

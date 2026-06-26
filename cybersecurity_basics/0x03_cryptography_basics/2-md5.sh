@@ -1,2 +1,3 @@
 #!/bin/bash
-echo -n "$1" | md5sum | cut -d' ' -f1 > 2_hash.txt
+. "$(dirname "$0")/../shared/hash_utils.sh"
+generate_hash "md5" "$1" "2_hash.txt"
