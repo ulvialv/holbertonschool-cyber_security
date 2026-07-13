@@ -1,2 +1,3 @@
 #!/bin/bash
-sudo nmap -sn -PE $1
+. "$(dirname "$0")/../shared/nmap_wrapper.sh"
+nmap_host_discovery "-PE" "$1"

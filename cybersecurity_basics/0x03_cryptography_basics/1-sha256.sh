@@ -1,2 +1,3 @@
 #!/bin/bash
-echo -n "$1" | sha256sum | cut -d' ' -f1 > 1_hash.txt
+. "$(dirname "$0")/../shared/hash_utils.sh"
+generate_hash "sha256" "$1" "1_hash.txt"
