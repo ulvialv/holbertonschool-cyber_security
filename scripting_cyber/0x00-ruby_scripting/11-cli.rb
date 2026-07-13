@@ -4,10 +4,16 @@ require 'optparse'
 TASKS_FILE = 'tasks.txt'
 
 def add_task(task)
-  File.open(TASKS_FILE, 'a') do |file|
-    file.puts(task)
+  begin
+    File.open(TASKS_FILE, 'a') do |file|
+      file.puts(task)
+    end
+    puts "Task '#{task}' added."
+  rescue Errno::EACCES
+    $stderr.puts "Error: permission denied writing to '#{TASKS_FILE}'"
+  rescue IOError => e
+    $stderr.puts "Error: could not write task: #{e.message}"
   end
-  puts "Task '#{task}' added."
 end
 
 def list_tasks
@@ -31,6 +37,8 @@ def remove_task(index)
       tasks.each { |task| file.write(task) }
     end
     puts "Task '#{removed_task}' removed."
+  else
+    $stderr.puts "Error: invalid task index '#{index}' (valid range: 1-#{tasks.length})"
   end
 end
 
